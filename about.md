@@ -43,7 +43,7 @@ I shoot photo and video, follow markets and personal finance closely, geek out o
 
 ## Get in Touch
 
-- **Email:** [your.email@uw.edu](mailto:your.email@uw.edu)
-- **GitHub:** [github.com/yourhandle](https://github.com/)
-- **LinkedIn:** [linkedin.com/in/yourhandle](https://linkedin.com/)
-- **Google Scholar:** [scholar.google.com/...](https://scholar.google.com/)
+- **Email:** [seanzhao@uw.edu](mailto:seanzhao@uw.edu)
+- **GitHub:** [SeanZhao1201](https://github.com/SeanZhao1201?tab=repositories)
+- **LinkedIn:** [xianxiang-zhao](https://www.linkedin.com/in/xianxiang-zhao-84771b164/)
+- **Google Scholar:** [GdPSgpMAAAAJ](https://scholar.google.com/citations?user=GdPSgpMAAAAJ&hl=en)
