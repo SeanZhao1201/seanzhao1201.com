@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
 import aboutRaw from '../about.md?raw';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -21,19 +22,32 @@ const Words = ({ text }) =>
     </span>
   ));
 
+const NAV_LINKS = [
+  { label: 'Research', target: '#research' },
+  { label: 'Teaching', target: '#teaching' },
+  { label: 'Projects', target: '#side-projects' },
+  { label: 'Contact', target: '#get-in-touch' },
+];
+
 export default function App() {
   const rootRef = useRef(null);
+  const lenisRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
   const { content } = parseFrontmatter(aboutRaw);
 
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    lenisRef.current = lenis;
     let rafId;
     const raf = (time) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     };
     rafId = requestAnimationFrame(raf);
-    lenis.on('scroll', ScrollTrigger.update);
+    lenis.on('scroll', ({ scroll }) => {
+      ScrollTrigger.update();
+      setScrolled(scroll > 24);
+    });
 
     const ctx = gsap.context(() => {
       gsap.to('.scroll-progress', {
@@ -113,11 +127,44 @@ export default function App() {
       ctx.revert();
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
+  const handleNavClick = (e, target) => {
+    e.preventDefault();
+    const el = document.querySelector(target);
+    if (el && lenisRef.current) {
+      lenisRef.current.scrollTo(el, { offset: -56, duration: 1.2 });
+    }
+  };
+
+  const handleScrollTop = (e) => {
+    e.preventDefault();
+    lenisRef.current?.scrollTo(0, { duration: 1.2 });
+  };
+
   return (
     <main ref={rootRef}>
+      <nav className={`nav${scrolled ? ' is-scrolled' : ''}`} aria-label="Primary">
+        <a href="#top" className="nav-brand" onClick={handleScrollTop}>
+          Sean Zhao
+        </a>
+        <ul className="nav-links">
+          {NAV_LINKS.map(({ label, target }) => (
+            <li key={target}>
+              <a
+                href={target}
+                className="nav-link"
+                onClick={(e) => handleNavClick(e, target)}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
       <div className="scroll-progress" aria-hidden />
 
       <section className="hero">
@@ -153,7 +200,12 @@ export default function App() {
 
       <section className="content">
         <article className="markdown">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeSlug]}
+          >
+            {content}
+          </ReactMarkdown>
         </article>
       </section>
 
