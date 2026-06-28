@@ -4,28 +4,63 @@ title: "About"
 
 # About Me
 
-Hi, I'm **Sean (Xianxiang Zhao)** — a PhD candidate in the Built Environment program at the **University of Washington**.
+Hi, I'm **Sean (Xianxiang Zhao)** — a PhD candidate in the Built Environment program (Building, Construction & Property Sciences) at the **University of Washington**, where I work in the **Lean Construction Research Lab** under Professor **Yong-Woo Kim**. I've passed my General Exam and am now in the dissertation phase, defending in **2027**.
+
+My work sits at the intersection of **construction management and AI**: I build LLM multi-agent systems that plan, schedule, and coordinate construction work — turning BIM, 4D, and supply-chain data into adaptive, knowledge-aware decision support rather than static automation. My dissertation, *LLM Multi-Agent Systems for LPS Look-Ahead Scheduling in Construction Supply Chain Coordination*, brings these threads together.
 
 ## Research
 
-I work in the **Lean Construction Research Lab** under Professor **Yong-Woo Kim**. My dissertation focuses on integrating Large Language Models (LLMs) with construction supply chain management and 4D scheduling workflows. I'm particularly interested in how multi-agent architectures and tool-use paradigms can push construction informatics beyond static automation toward adaptive, knowledge-aware decision support.
+**AI-Driven 4D Construction Planning & Scheduling** *(dissertation core chapter · with Turner Construction)*
 
-I've completed my General Exam and am currently in the dissertation phase. Alongside my academic work, I collaborate with **Turner Construction** as a part-time VDC Intern, where ideas from BIM-to-P6 schedule integration meet the realities of project delivery.
+I co-initiated this applied research consortium together with **Turner Construction**, where I work as a **Research Intern**. I'm designing an LLM-powered multi-agent system that interfaces with **Primavera P6** and **Synchro 4D** to automatically generate construction methods and 4D schedules, then links them to on-site productivity tracking — backed by a structured data hub that supplies the construction supply chain with reliable, structured inputs for downstream decisions.
+
+**LLM Multi-Agent Systems for Supply Chain Coordination** *(2023 – present)*
+
+I designed and built a multi-agent system (**LangChain / LangGraph**) in which Supplier and General Contractor agents coordinate through natural-language dialogue, improving the transparency and reliability of construction supply chains. The workflow embeds **Last Planner System (LPS)** look-ahead logic so generated plans stay constrained by real site conditions. This line of work led to first-author papers at **IGLC 33 (2025)** and **ISARC 42 (2025)**, the latter extending the framework with a RAG-enhanced safety-information retrieval pipeline.
+
+**Building Owners Assessment Tool (BOAT)** *(graduate research assistant)*
+
+I ran owner-persona analysis of construction project owners and helped build a decision-support tool that recommends an appropriate project delivery method based on an owner's profile, contributing across the project's framework and deployment phases.
+
+**Blockchain-Based Supply Chain Coordination** *(M.S. thesis)*
+
+I modeled a prefabricated curtain-wall supply chain with a Bayesian rebate mechanism to align incentives and minimize joint cost, then implemented it as a five-party **Hyperledger Fabric** network with smart contracts in **Go**.
 
 **Research interests**
 
-- Large Language Models for construction informatics
-- 4D scheduling and BIM/VDC integration (IFC, Revit, Navisworks, Primavera P6)
+- Large Language Models and multi-agent systems for construction informatics
+- 4D scheduling and BIM/VDC integration (Revit, Navisworks, Synchro 4D, Primavera P6)
 - Construction supply chain coordination and incentive mechanisms
-- Multi-agent systems, tool use, and knowledge graphs
+- Tool use, RAG, and knowledge-aware decision support
+
+## Publications
+
+A full list lives on my [Google Scholar](https://scholar.google.com/citations?user=GdPSgpMAAAAJ&hl=en). Selected first-author work:
+
+- **Zhao, X.**, Kuang, W., & Kim, Y.-W. (2025). *Leveraging a Multi-Agent System Powered by Large Language Models to Improve Transparency and Reliability in Automated Supply Chain Coordination.* Proc. 33rd Annual Conference of the International Group for Lean Construction (**IGLC 33**), Osaka & Kyoto, Japan, pp. 681–692. [doi:10.24928/2025/0102](https://doi.org/10.24928/2025/0102)
+- **Zhao, X.**, Mehta, A., Sethi, F., Gue, B., Mei, Q., & Wu, L. (2025). *RAG-Enhanced Safety Information Retrieval for Construction: Integration of Large Language Models with Domain-Specific Information.* Proc. 42nd International Symposium on Automation and Robotics in Construction (**ISARC 2025**), Montreal, Canada, pp. 674–682. [doi:10.22260/ISARC2025/0088](https://doi.org/10.22260/ISARC2025/0088)
 
 ## Teaching
 
-I teach **CM260: Digital Tools and BIM** in UW's Construction Management program — an introductory course covering BIM workflows and the digital tools that have become standard across the AEC industry.
+**Instructor of Record — CM 260: Digital Tools (Engineering Drawing & BIM).** I've delivered this required Construction Management core course across three consecutive Winter–Spring cycles (2024–2026), owning preparation, lecturing, and grading. I redesigned it around **project-based teaching** and authored the materials now used in later offerings.
+
+**Instructor — CM 598: BIM Certificate Program (UW × Skanska).** I co-teach UW's industry-facing BIM Certificate program with [Graham Condit](https://www.linkedin.com/in/graham-condit-1385a112/), aimed at working project managers and BIM professionals.
+
+**Grader — CM 312: Construction Accounting** (2022).
+
+## Education
+
+- **Ph.D., Built Environment** — University of Washington (expected 2027). Track: Building, Construction & Property Sciences. Advisor: Yong-Woo Kim.
+- **M.S., Construction Management** — University of Washington (2023). John E. Schaufelberger Endowed Fellowship.
+- **B.E., Engineering Management** — Jilin Jianzhu University, China (2020).
+
+## Industry Experience
+
+Before graduate school I worked as an entry-level **Project Engineer** at **China Railway 20th Bureau Group** in Suzhou, China (2020–2021), supporting a heavy-civil project — handling RFIs, coordinating with city agencies in AutoCAD, optimizing weekly resource allocation, and sourcing a local timber supplier to cut formwork cost.
 
 ## Outreach
 
-For several years now I've helped organize the **Washington Transportation Camp (WATC)** — a summer program that introduces high school students to careers in transportation engineering, planning, and policy. The camp runs at both UW and WSU, with partners including WSDOT, Amazon, and PACCAR.
+For three years running (2024–2026) I've been **lead organizer** of the **Washington Transportation Camp (WATC)** high-school track — owning the planning and on-site execution, and designing the curriculum that introduces K–12 students to careers in transportation and the built environment. The camp runs across UW and WSU, with partners including WSDOT, Amazon, and PACCAR.
 
 ## Side Projects
 
@@ -35,7 +70,13 @@ I also serve as a peer reviewer for conferences in the construction technology s
 
 ## Toolkit
 
-Python, LaTeX, Linux/WSL2 for general work; Revit, Navisworks, Primavera P6, and IfcOpenShell on the construction side; vLLM, Ollama, Hugging Face, and Claude Code for LLM workflows; OR-Tools and Gurobi when something needs optimizing.
+**AI / LLM:** LangChain, LangGraph, RAG pipelines, multi-agent systems, LLaMA fine-tuning, prompt engineering, and vector databases — plus vLLM, Ollama, Hugging Face, and Claude Code.
+
+**Programming & data:** Python, Go, scikit-learn, NumPy, Pandas, Matplotlib/Seaborn; OR-Tools and Gurobi when something needs optimizing.
+
+**BIM, 4D & scheduling:** Revit, Navisworks, Synchro 4D, Bluebeam, SketchUp, AutoCAD, IfcOpenShell; Primavera P6, MS Project, and the Last Planner System.
+
+**Other:** Hyperledger Fabric (smart contracts), LaTeX, Git, Linux/WSL2.
 
 ## Outside Work
 

@@ -24,6 +24,7 @@ const Words = ({ text }) =>
 
 const NAV_LINKS = [
   { label: 'Research', target: '#research' },
+  { label: 'Publications', target: '#publications' },
   { label: 'Teaching', target: '#teaching' },
   { label: 'Projects', target: '#side-projects' },
   { label: 'Contact', target: '#get-in-touch' },
@@ -146,6 +147,8 @@ export default function App() {
 
   return (
     <main ref={rootRef}>
+      <div className="grain" aria-hidden />
+      <div className="frame" aria-hidden />
       <nav className={`nav${scrolled ? ' is-scrolled' : ''}`} aria-label="Primary">
         <a href="#top" className="nav-brand" onClick={handleScrollTop}>
           Sean Zhao
@@ -171,24 +174,43 @@ export default function App() {
         <div className="hero-bg" aria-hidden />
         <div className="hero-inner">
           <div className="hero-mask">
-            <p className="hero-line eyebrow">Personal Website</p>
+            <p className="hero-line eyebrow">Personal Site — Seattle, WA</p>
           </div>
-          <div className="hero-mask">
-            <h1 className="hero-line">Sean Zhao</h1>
-          </div>
-          <div className="hero-mask">
-            <p className="hero-line subtitle">
-              PhD candidate · Built Environment · University of Washington
-            </p>
+          <h1 className="hero-title">
+            <span className="hero-mask">
+              <span className="hero-line">Sean</span>
+            </span>
+            <span className="hero-mask">
+              <span className="hero-line">Zhao</span>
+            </span>
+          </h1>
+          <div className="hero-meta">
+            <div className="hero-mask">
+              <p className="hero-line subtitle">
+                PhD candidate · Built Environment · University of Washington
+              </p>
+            </div>
+            <div className="hero-mask">
+              <p className="hero-line tagline">
+                Building LLM multi-agent systems for construction planning,
+                scheduling, and supply-chain coordination.
+              </p>
+            </div>
           </div>
           <div className="hero-mask">
             <p className="hero-line scroll-hint">Scroll ↓</p>
           </div>
         </div>
+        <div className="hero-coords" aria-hidden>
+          <span>47.66° N</span>
+          <span>122.31° W</span>
+          <span>Est. 2026</span>
+        </div>
       </section>
 
       <section className="pin-section">
         <div className="pin-content">
+          <p className="pin-kicker">The Work</p>
           <h2 className="pin-title">
             <Words text="LLMs meet construction." />
           </h2>
