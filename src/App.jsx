@@ -2,18 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import aboutRaw from '../about.md?raw';
+import aboutHtml from '../about.md';
 
 gsap.registerPlugin(ScrollTrigger);
-
-function parseFrontmatter(raw) {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-  if (!match) return { content: raw };
-  return { content: match[2] };
-}
 
 const Words = ({ text }) =>
   text.split(' ').map((w, i) => (
@@ -34,9 +25,22 @@ export default function App() {
   const rootRef = useRef(null);
   const lenisRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
-  const { content } = parseFrontmatter(aboutRaw);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    // Respect reduced-motion: no smooth-scroll hijack, no scroll-driven
+    // animation — content renders in its natural, fully visible state.
+    if (reduceMotion) {
+      const onScroll = () => setScrolled(window.scrollY > 24);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      return () => window.removeEventListener('scroll', onScroll);
+    }
+
     const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
     lenisRef.current = lenis;
     let rafId;
@@ -124,6 +128,10 @@ export default function App() {
       });
     }, rootRef);
 
+    // Fraunces/Inter load after first layout; pinned-section trigger
+    // positions depend on final metrics, so refresh once fonts settle.
+    document.fonts?.ready?.then(() => ScrollTrigger.refresh());
+
     return () => {
       ctx.revert();
       cancelAnimationFrame(rafId);
@@ -132,24 +140,47 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  const scrollToTarget = (el) => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(el, { offset: -56, duration: 1.2 });
+    } else {
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + window.scrollY - 56,
+      });
+    }
+  };
+
   const handleNavClick = (e, target) => {
     e.preventDefault();
+    setMenuOpen(false);
     const el = document.querySelector(target);
-    if (el && lenisRef.current) {
-      lenisRef.current.scrollTo(el, { offset: -56, duration: 1.2 });
-    }
+    if (el) scrollToTarget(el);
   };
 
   const handleScrollTop = (e) => {
     e.preventDefault();
-    lenisRef.current?.scrollTo(0, { duration: 1.2 });
+    setMenuOpen(false);
+    if (lenisRef.current) lenisRef.current.scrollTo(0, { duration: 1.2 });
+    else window.scrollTo({ top: 0 });
   };
 
   return (
     <main ref={rootRef}>
       <div className="grain" aria-hidden />
       <div className="frame" aria-hidden />
-      <nav className={`nav${scrolled ? ' is-scrolled' : ''}`} aria-label="Primary">
+      <nav
+        className={`nav${scrolled || menuOpen ? ' is-scrolled' : ''}`}
+        aria-label="Primary"
+      >
         <a href="#top" className="nav-brand" onClick={handleScrollTop}>
           Sean Zhao
         </a>
@@ -166,7 +197,28 @@ export default function App() {
             </li>
           ))}
         </ul>
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          {menuOpen ? 'Close' : 'Menu'}
+        </button>
       </nav>
+
+      <div id="mobile-menu" className={`nav-panel${menuOpen ? ' is-open' : ''}`}>
+        <ul>
+          {NAV_LINKS.map(({ label, target }) => (
+            <li key={target}>
+              <a href={target} onClick={(e) => handleNavClick(e, target)}>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="scroll-progress" aria-hidden />
 
@@ -221,14 +273,10 @@ export default function App() {
       </section>
 
       <section className="content">
-        <article className="markdown">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeSlug]}
-          >
-            {content}
-          </ReactMarkdown>
-        </article>
+        <article
+          className="markdown"
+          dangerouslySetInnerHTML={{ __html: aboutHtml }}
+        />
       </section>
 
       <footer className="footer">
