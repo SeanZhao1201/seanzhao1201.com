@@ -41,7 +41,7 @@ npm run deploy     # 手动部署（一般不需要，push 即部署）
 
 ## 当前状态
 
-**2026-08-11** · 线上 = main `355dda0` · 本地分支 `apple-design-polish` 完成 Apple 设计精进（25 项，评审见下），待 PR：scrollspy 导航、全站 :active 按压反馈、联系卡整卡可点、nav 材质修复（filter 列表匹配）、移动菜单 scrim + 镜像缓动、48px 触控目标、px→rem 字号、字距三级 token、skip-link、focus-visible、prefers-reduced-transparency/contrast、reduced-motion 温和渐隐 + 进度条驱动。
+**2026-08-11** · 线上 = main `87f6ae6`（PR #7 已合并部署）· Apple 设计精进 25 项上线：scrollspy 导航、全站 :active 按压反馈、联系卡整卡可点、nav 材质修复（filter 列表匹配）、移动菜单 scrim + 镜像缓动、48px 触控目标、px→rem 字号、字距三级 token、skip-link、focus-visible、prefers-reduced-transparency/contrast、reduced-motion 温和渐隐 + 进度条驱动。待办里的三项视觉走查仍未做。
 
 ## 待办
 
