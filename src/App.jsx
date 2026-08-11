@@ -17,28 +17,58 @@ const NAV_LINKS = [
   { label: 'Research', target: '#research' },
   { label: 'Publications', target: '#publications' },
   { label: 'Teaching', target: '#teaching' },
-  { label: 'Projects', target: '#side-projects' },
+  { label: 'Side Projects', target: '#side-projects' },
   { label: 'Contact', target: '#get-in-touch' },
 ];
 
 export default function App() {
   const rootRef = useRef(null);
   const lenisRef = useRef(null);
+  const toggleRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const reduceMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches;
 
+    const sectionEls = NAV_LINKS.map(({ target }) =>
+      document.querySelector(target),
+    ).filter(Boolean);
+    const updateActive = () => {
+      let current = '';
+      for (const el of sectionEls) {
+        if (el.getBoundingClientRect().top <= window.innerHeight * 0.35) {
+          current = `#${el.id}`;
+        }
+      }
+      setActiveSection(current);
+    };
+
     // Respect reduced-motion: no smooth-scroll hijack, no scroll-driven
     // animation — content renders in its natural, fully visible state.
+    // The progress bar and scrollspy are status feedback, not motion,
+    // so they stay live here too.
     if (reduceMotion) {
-      const onScroll = () => setScrolled(window.scrollY > 24);
+      const bar = rootRef.current?.querySelector('.scroll-progress');
+      const onScroll = () => {
+        setScrolled(window.scrollY > 24);
+        updateActive();
+        if (bar) {
+          const max =
+            document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`;
+        }
+      };
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
-      return () => window.removeEventListener('scroll', onScroll);
+      window.addEventListener('resize', onScroll, { passive: true });
+      return () => {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+      };
     }
 
     const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
@@ -52,7 +82,9 @@ export default function App() {
     lenis.on('scroll', ({ scroll }) => {
       ScrollTrigger.update();
       setScrolled(scroll > 24);
+      updateActive();
     });
+    updateActive();
 
     const ctx = gsap.context(() => {
       gsap.to('.scroll-progress', {
@@ -62,7 +94,7 @@ export default function App() {
           trigger: document.body,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.3,
+          scrub: true,
         },
       });
 
@@ -106,7 +138,9 @@ export default function App() {
         },
       );
 
-      gsap.utils.toArray('.markdown > *').forEach((el) => {
+      // Lists are excluded here — their li stagger below is their only
+      // entrance, so items don't double-fade through two easings.
+      gsap.utils.toArray('.markdown > *:not(ul)').forEach((el) => {
         gsap.from(el, {
           y: 32,
           opacity: 0,
@@ -143,7 +177,10 @@ export default function App() {
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e) => {
-      if (e.key === 'Escape') setMenuOpen(false);
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -151,7 +188,13 @@ export default function App() {
 
   const scrollToTarget = (el) => {
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(el, { offset: -56, duration: 1.2 });
+      // Distance-scaled duration: nearby sections arrive quickly, full-page
+      // jumps stretch out so peak velocity stays below the strobing range.
+      const distance = Math.abs(el.getBoundingClientRect().top - 56);
+      lenisRef.current.scrollTo(el, {
+        offset: -56,
+        duration: gsap.utils.clamp(0.65, 1.6, distance / 3000),
+      });
     } else {
       window.scrollTo({
         top: el.getBoundingClientRect().top + window.scrollY - 56,
@@ -163,22 +206,47 @@ export default function App() {
     e.preventDefault();
     setMenuOpen(false);
     const el = document.querySelector(target);
-    if (el) scrollToTarget(el);
+    if (el) {
+      scrollToTarget(el);
+      // Move keyboard focus with the visual scroll; preventScroll keeps the
+      // browser's instant scroll-into-view from fighting Lenis.
+      el.setAttribute('tabindex', '-1');
+      el.focus({ preventScroll: true });
+    }
   };
 
   const handleScrollTop = (e) => {
     e.preventDefault();
     setMenuOpen(false);
-    if (lenisRef.current) lenisRef.current.scrollTo(0, { duration: 1.2 });
-    else window.scrollTo({ top: 0 });
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, {
+        duration: gsap.utils.clamp(0.65, 1.6, lenisRef.current.scroll / 3000),
+      });
+    } else {
+      window.scrollTo({ top: 0 });
+    }
+  };
+
+  const handleSkip = (e) => {
+    e.preventDefault();
+    const el = document.getElementById('main-content');
+    if (!el) return;
+    if (lenisRef.current) lenisRef.current.scrollTo(el, { immediate: true });
+    else {
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY });
+    }
+    el.focus({ preventScroll: true });
   };
 
   return (
     <main ref={rootRef}>
+      <a className="skip-link" href="#main-content" onClick={handleSkip}>
+        Skip to content
+      </a>
       <div className="grain" aria-hidden />
       <div className="frame" aria-hidden />
       <nav
-        className={`nav${scrolled || menuOpen ? ' is-scrolled' : ''}`}
+        className={`nav${scrolled || menuOpen ? ' is-scrolled' : ''}${menuOpen ? ' is-open' : ''}`}
         aria-label="Primary"
       >
         <a href="#top" className="nav-brand" onClick={handleScrollTop}>
@@ -190,6 +258,7 @@ export default function App() {
               <a
                 href={target}
                 className="nav-link"
+                aria-current={activeSection === target ? 'location' : undefined}
                 onClick={(e) => handleNavClick(e, target)}
               >
                 {label}
@@ -198,6 +267,7 @@ export default function App() {
           ))}
         </ul>
         <button
+          ref={toggleRef}
           type="button"
           className="nav-toggle"
           aria-expanded={menuOpen}
@@ -208,11 +278,20 @@ export default function App() {
         </button>
       </nav>
 
+      <div
+        className={`nav-scrim${menuOpen ? ' is-open' : ''}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden
+      />
       <div id="mobile-menu" className={`nav-panel${menuOpen ? ' is-open' : ''}`}>
         <ul>
           {NAV_LINKS.map(({ label, target }) => (
             <li key={target}>
-              <a href={target} onClick={(e) => handleNavClick(e, target)}>
+              <a
+                href={target}
+                aria-current={activeSection === target ? 'location' : undefined}
+                onClick={(e) => handleNavClick(e, target)}
+              >
                 {label}
               </a>
             </li>
@@ -272,7 +351,7 @@ export default function App() {
         </div>
       </section>
 
-      <section className="content">
+      <section className="content" id="main-content" tabIndex={-1}>
         <article
           className="markdown"
           dangerouslySetInnerHTML={{ __html: aboutHtml }}
@@ -281,6 +360,9 @@ export default function App() {
 
       <footer className="footer">
         <p>© {new Date().getFullYear()} Sean Zhao · Seattle, WA</p>
+        <a href="#top" className="footer-top" onClick={handleScrollTop}>
+          Back to top ↑
+        </a>
       </footer>
     </main>
   );
