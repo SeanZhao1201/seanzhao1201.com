@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { cloudflare } from '@cloudflare/vite-plugin';
@@ -52,6 +53,23 @@ function markdownToHtml() {
   };
 }
 
+// Extra static pages. Each entry is a root-level `<name>.html` that Vite
+// builds as its own entry. Cloudflare's asset router (html_handling
+// auto-trailing-slash) serves `/<name>` from `<name>.html`, and the
+// Cloudflare Vite plugin applies the same rules to the dev server, so
+// URLs stay extensionless everywhere without extra middleware.
+const PAGES = ['jiuhengasia'];
+
+const here = (file) => fileURLToPath(new URL(file, import.meta.url));
+
 export default defineConfig({
   plugins: [markdownToHtml(), react(), cloudflare()],
+  build: {
+    rollupOptions: {
+      input: {
+        main: here('index.html'),
+        ...Object.fromEntries(PAGES.map((p) => [p, here(`${p}.html`)])),
+      },
+    },
+  },
 });

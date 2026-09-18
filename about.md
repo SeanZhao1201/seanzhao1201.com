@@ -68,6 +68,8 @@ I'm collaborating with **Wenyi Kuang** on a Pictionary-style evaluation framewor
 
 I also serve as a peer reviewer for conferences in the construction technology space, including **ISARC** and **IGLC**.
 
+On the web side, I built and maintain the site for [Jiuheng Advertising & Exhibition](/jiuhengasia), a Shanghai-based live-communication agency working with automotive brands across Asia-Pacific.
+
 ## Toolkit
 
 **AI / LLM:** LangChain, LangGraph, RAG pipelines, multi-agent systems, LLaMA fine-tuning, prompt engineering, and vector databases — plus vLLM, Ollama, Hugging Face, and Claude Code.

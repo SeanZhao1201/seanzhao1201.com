@@ -1,0 +1,522 @@
+// All copy and image references for /jiuhengasia. Text is transcribed from
+// the company's own deck (久桁业务介绍 中文版); nothing here is invented.
+// Images live in public/jiuhengasia/ — dimensions are baked in so every
+// <img> reserves its box before it lazy-loads (no layout shift).
+
+const DIMS = {
+  'factory-1': [610, 261],
+  'factory-2': [259, 172],
+  'factory-3': [230, 172],
+  'factory-4': [233, 172],
+  'factory-5': [289, 175],
+  'factory-6': [221, 214],
+  'mg-2025-kv-1': [838, 1050],
+  'mg-2025-kv-2': [592, 1047],
+  'mg-2025-kv-3': [834, 1050],
+  'event-gala': [438, 400],
+  'event-roadshow': [960, 920],
+  'event-autoshow': [725, 667],
+  'mg-testdrive-1': [1100, 825],
+  'mg-testdrive-2': [1100, 825],
+  'mg-testdrive-3': [1100, 825],
+  'mg-testdrive-4': [1100, 825],
+  'mg-hs-launch-1': [373, 190],
+  'mg-hs-launch-2': [373, 210],
+  'mias-1': [618, 477],
+  'mias-2': [335, 223],
+  'mias-3': [335, 236],
+  'mias-poster': [309, 475],
+  'nio-1': [1800, 1000],
+  'nio-2': [1059, 731],
+  'nio-3': [1059, 689],
+  'vw-ciie-2025': [1800, 1012],
+  'mb-iaa23-1': [1100, 619],
+  'mb-iaa23-2': [1100, 619],
+  'mb-iaa23-3': [1100, 619],
+  'mb-iaa23-4': [1100, 618],
+  'mb-iaa25-1': [1745, 1288],
+  'mb-iaa25-2': [1100, 1209],
+  'mb-iaa25-3': [1023, 1288],
+  'showroom-1': [1383, 599],
+  'showroom-2': [922, 597],
+  'showroom-3': [923, 511],
+  'showroom-4': [736, 521],
+  'showroom-5': [628, 519],
+  'display-render': [1800, 1013],
+  'render-1': [1100, 619],
+  'render-2': [1100, 619],
+  'render-3': [1100, 619],
+  'render-4': [1100, 628],
+  'build-1': [369, 232],
+  'build-2': [362, 237],
+  'build-3': [380, 237],
+  'hybrid-1': [859, 560],
+  'hybrid-2': [845, 562],
+  'hybrid-3': [855, 524],
+  'hybrid-4': [850, 525],
+  'mb-dialogue-1': [536, 401],
+  'mb-dialogue-2': [554, 401],
+  'vw-brand-1': [1800, 1159],
+  'vw-brand-2': [880, 1342],
+  'vw-brand-3': [978, 1342],
+  'vw40-1': [1800, 811],
+  'vw40-2': [818, 1417],
+  'vw40-sofa': [960, 664],
+  'vw40-kv': [418, 726],
+  'video-mg-omnibus': [1100, 610],
+  'video-mgs5': [1100, 619],
+  'coll-rollup': [480, 600],
+  'coll-plate': [480, 600],
+  'coll-poster': [480, 600],
+  'coll-board': [480, 600],
+  'coll-banner': [480, 600],
+  'coll-hanger': [480, 600],
+  'coll-card': [480, 600],
+  'coll-tower': [480, 600],
+  'merch-tumbler': [480, 600],
+  'merch-plush': [480, 600],
+  'merch-jacket': [480, 600],
+  'merch-tee': [480, 600],
+  'merch-watch': [480, 600],
+  'merch-cap': [480, 600],
+  'merch-car': [480, 600],
+  'merch-pins': [480, 600],
+  'merch-tracker': [480, 600],
+  'merch-umbrella': [480, 600],
+  'billboard-1': [1100, 684],
+  'billboard-2': [1100, 641],
+  'expo-1': [960, 631],
+  'expo-2': [960, 631],
+  'expo-4': [960, 631],
+  'disney-1': [1800, 1287],
+  'disney-2': [997, 689],
+  'disney-3': [997, 689],
+  'disney-4': [695, 480],
+  'disney-5': [695, 439],
+  'bird-2': [1348, 897],
+  'bird-3': [960, 622],
+  'bird-4': [960, 650],
+  'bird-5': [960, 639],
+};
+
+export const img = (name, alt, caption) => {
+  const [w, h] = DIMS[name];
+  return { src: `/jiuhengasia/${name}.jpg`, w, h, alt, caption };
+};
+
+export const NAV_LINKS = [
+  { label: 'Business', target: '#core-business' },
+  { label: 'Work', target: '#cases' },
+  { label: 'Clients', target: '#clients' },
+  { label: 'Presence', target: '#presence' },
+  { label: 'Contact', target: '#contact' },
+];
+
+export const STATS = [
+  { value: '8', label: '城市 · Cities' },
+  { value: '4', label: '核心业务 · Core businesses' },
+  { value: '14', label: '服务品牌 · Brands served' },
+  { value: '20,000', unit: 'm²', label: '自有工厂 · Own factory' },
+];
+
+export const CORE_BUSINESS = [
+  {
+    zh: '营销活动',
+    en: 'Event Marketing',
+    desc: '晚会、路演、车展与新车发布——从概念策划、场景设计到供应商协调与现场执行。',
+  },
+  {
+    zh: '企业展厅与室内',
+    en: 'Corporate Galleries & Interior',
+    desc: '品牌展厅、室内展具与互动装置：3D 效果图、尺寸方案、自有工厂制造与安装。',
+  },
+  {
+    zh: '广告营销',
+    en: 'Advertisement Marketing',
+    desc: '年度品牌传播体系、社交媒体与投放、视频定制、宣发物料、周边产品与户外广告。',
+  },
+  {
+    zh: '主题特展',
+    en: 'Thematic Exhibitions',
+    desc: '面向公众的主题展览：以主题内容产品协助文旅与产业园整合营销。',
+  },
+];
+
+export const SERVICES = [
+  {
+    zh: '策略',
+    en: 'Strategy',
+    items: [
+      ['策略', 'Strategy'],
+      ['发现与研究', 'Discovery & Research'],
+      ['用户体验', 'User Experience'],
+      ['品牌策略', 'Brand Strategy'],
+      ['定位', 'Positioning'],
+      ['内容策略', 'Content Strategy'],
+      ['营销活动', 'Marketing Campaign'],
+    ],
+  },
+  {
+    zh: '品牌与设计',
+    en: 'Branding & Design',
+    items: [
+      ['品牌发展', 'Brand Development'],
+      ['标志与识别系统', 'Logo & Identity Systems'],
+      ['品牌风格指南', 'Brand Style Guides'],
+      ['信息传达', 'Messaging'],
+      ['印刷与包装', 'Print & Packaging'],
+      ['环境设计', 'Environmental Design'],
+      ['图标设计', 'Iconography'],
+    ],
+  },
+  {
+    zh: '内容制作',
+    en: 'Content Production',
+    items: [
+      ['摄影', 'Photography'],
+      ['摄像', 'Videography'],
+      ['概念策划', 'Conceptualization'],
+      ['脚本开发与文案撰写', 'Script Development & Copywriting'],
+      ['故事板 / 分镜', 'Storyboarding'],
+      ['动画与动态图形', 'Animation & Motion Graphics'],
+      ['产品造型', 'Product Styling'],
+      ['食物与道具造型', 'Food & Prop Styling'],
+      ['制作管理', 'Production Management'],
+      ['场景设计', 'Set Design'],
+      ['模特与人才管理', 'Model & Talent Management'],
+    ],
+  },
+  {
+    zh: '活动管理',
+    en: 'Event Management',
+    items: [
+      ['概念策划', 'Conceptualization'],
+      ['场景设计 / 活动布置', 'Set Design / Event Styling'],
+      ['供应商协调', 'Supplier Coordination'],
+      ['记录 / 影像留存', 'Documentation Photo & Video'],
+      ['执行', 'Execution'],
+      ['代币 / 凭证', 'Token'],
+    ],
+  },
+  {
+    zh: '数字管理',
+    en: 'Digital Management',
+    items: [
+      ['社交媒体管理', 'Social Media Management'],
+      ['社群管理 / 数字公关', 'Community Management / Digital PR'],
+      ['活动', 'Campaign'],
+      ['关键意见领袖管理', 'KOL Management'],
+    ],
+  },
+];
+
+export const MG_CAMPAIGN_STATS = [
+  { value: '2,514', label: 'Meta 与 Google 获取线索' },
+  { value: '3.5M', label: 'Meta 总曝光' },
+  { value: '2.1M', label: 'Google Ads 总曝光' },
+  { value: '2.1M', label: 'Meta 总触达' },
+  { value: '143K', label: 'Google Ads 总点击' },
+];
+
+// Grouped by core business, in deck order.
+export const CASE_GROUPS = [
+  {
+    zh: '营销活动',
+    en: 'Event Marketing',
+    intro: [
+      img('event-gala', 'MG Holiday 夏日晚会舞台', '晚会'),
+      img('event-roadshow', 'MG 商场路演展台', '路演'),
+      img('event-autoshow', 'MG 车展展台', '车展'),
+    ],
+    cases: [
+      {
+        title: '菲律宾 MG 汽车 · 2025 年营销活动',
+        meta: 'MG Philippines · 2025 · 全球制造，卓越品质',
+        body: '360° 营销活动：策略、核心创意、主视觉 KV、关键信息、品牌风格指南、户外广告设计、印刷品文案、概念构思、分镜脚本、制作管理、社交媒体、Meta 广告与 Google 广告。社交媒体线索获取活动上线 1.5 个月的成果：',
+        stats: MG_CAMPAIGN_STATS,
+        images: [
+          img('mg-2025-kv-1', 'MG 主视觉：The Future Made Great'),
+          img('mg-2025-kv-2', 'MG 主视觉：Cruise the Holidays'),
+          img('mg-2025-kv-3', 'MG ZS EV 主视觉'),
+        ],
+        layout: 'three',
+      },
+      {
+        title: '2025 MG 试驾活动',
+        meta: 'MG · STV 菲律宾 · 2025',
+        images: [
+          img('mg-testdrive-1', '试驾活动夜景：MG 车队与临时展馆'),
+          img('mg-testdrive-2', '试驾活动接待区'),
+          img('mg-testdrive-3', '试驾活动休息区'),
+          img('mg-testdrive-4', '试驾活动场地全景'),
+        ],
+        layout: 'two',
+      },
+      {
+        title: '2026 MG HS 发布活动',
+        meta: 'MG · 菲律宾 · 2026',
+        images: [
+          img('mg-hs-launch-1', 'MG HS 发布晚宴：宴会厅舞台'),
+          img('mg-hs-launch-2', 'MG HS 发布晚宴：红色灯光舞台'),
+        ],
+        layout: 'two-small',
+      },
+      {
+        title: 'MG 车展 · 2025 年菲律宾国际车展',
+        meta: 'MG · MIAS · Manila · 2025',
+        images: [
+          img('mias-1', 'MIAS 2025 MG 展台主舞台'),
+          img('mias-2', 'MG 透视展车'),
+          img('mias-3', 'MG 展台俯瞰'),
+          img('mias-poster', 'Made Global, Made Great 展板'),
+        ],
+        layout: 'four',
+      },
+      {
+        title: '蔚来汽车 · 上海车展',
+        meta: 'NIO · Shanghai · 2017',
+        images: [
+          img('nio-1', '蔚来上海车展展台：环形灯带与主屏'),
+          img('nio-2', '蔚来展台二层视角'),
+          img('nio-3', '蔚来展台旋转楼梯'),
+        ],
+        layout: 'feature',
+      },
+      {
+        title: '大众汽车集团 · 2025 年进博会',
+        meta: 'Volkswagen Group · CIIE · Shanghai · 2025',
+        images: [img('vw-ciie-2025', '大众汽车集团进博会展台')],
+        layout: 'one',
+      },
+      {
+        title: '梅赛德斯-奔驰 · 2023 年慕尼黑国际车展',
+        meta: 'Mercedes-Benz · IAA · Munich · 2023',
+        images: [
+          img('mb-iaa23-1', '奔驰 IAA 2023 户外展馆夜景'),
+          img('mb-iaa23-2', '奔驰 IAA 2023 红色立方展馆'),
+          img('mb-iaa23-3', '奔驰 IAA 2023 室内展车'),
+          img('mb-iaa23-4', '奔驰 IAA 2023 展馆接待'),
+        ],
+        layout: 'two',
+      },
+      {
+        title: '梅赛德斯-奔驰 · IAA 2025',
+        meta: 'Mercedes-Benz · IAA · Munich · 2025',
+        body: '2025 年，我们将 Apothekenhof 改造成了一座可步入的雕塑——灵感源自全新 GLC 标志性的格栅，并以此构成了一幅引人注目的宏大画面。一条中央通道，地面上排列着排版独特的标语，从入口处便迎接访客，并引导他们走进这座灯火通明、可步入的雕塑之中。互动站点、混合现实、360° 投影以及 DJ 表演将展馆变成了一场多感官的体验。在今年的峰会上，焦点转向商业与科技，提供了互动展示以及对未来出行解决方案的深刻见解。',
+        images: [
+          img('mb-iaa25-1', '奔驰 IAA 2025 可步入雕塑夜景'),
+          img('mb-iaa25-2', '奔驰 IAA 2025 俯瞰与室内投影'),
+          img('mb-iaa25-3', '奔驰 IAA 2025 建筑外观'),
+        ],
+        layout: 'feature',
+      },
+    ],
+  },
+  {
+    zh: '企业展厅与室内',
+    en: 'Corporate Galleries & Interior',
+    cases: [
+      {
+        title: '品牌展厅',
+        meta: 'Showrooms · Interior',
+        images: [
+          img('showroom-1', '品牌展厅：展车与灯箱墙'),
+          img('showroom-2', '品牌展厅：白色展厅'),
+          img('showroom-3', '品牌展厅：红黑陈列墙'),
+          img('showroom-4', '品牌展厅：走廊'),
+          img('showroom-5', '品牌展厅：红色主题空间'),
+        ],
+        layout: 'feature',
+      },
+      {
+        title: '室内展具',
+        meta: 'Illuminated sign · Backdrop · Platform · Reception desk · Table & chairs',
+        body: '从 3D 效果图与尺寸参考到实物落地：展台、灯箱标识、背景板、接待台与配套家具由自有工厂生产。',
+        images: [
+          img('display-render', '室内展具效果图：灯箱标识、背景板、展台与接待台'),
+          img('render-1', '4 × 6 m 展台 3D 效果图（单车）'),
+          img('render-2', '6 × 8 m 展台 3D 效果图（双车）'),
+          img('render-3', '4000 × 6000 mm 展台平面尺寸图'),
+          img('render-4', '6000 × 8000 mm 展台平面尺寸图'),
+          img('build-1', '展具实物：工厂预装'),
+          img('build-2', '展具实物：工厂预装（含展车）'),
+          img('build-3', '展具实物：户外移动展台'),
+        ],
+        layout: 'display',
+      },
+      {
+        title: 'MG 混动模型',
+        meta: 'MG Hybrid+ · 互动展示模型',
+        images: [
+          img('hybrid-1', 'MG 混动底盘模型效果图'),
+          img('hybrid-2', 'MG 混动模型与展板'),
+          img('hybrid-3', 'MG 混动模型实物'),
+          img('hybrid-4', 'MG 混动展板效果图'),
+        ],
+        layout: 'two',
+      },
+      {
+        title: '奔驰可持续发展对话 2024',
+        meta: 'Mercedes-Benz Sustainability Dialogue · 2024',
+        body: '梅赛德斯-奔驰是首家在中国举办可持续发展对话的汽车公司之一。自 2010 年上海世博会期间举办首届活动以来，该对话已成功举办 12 届，彰显了梅赛德斯-奔驰对这一议题的高度重视。针对此次可持续发展对话，久桁打造了一整套活动展具，其中包括全新 E 级车智能安全展示车，以及一套主被动安全沉浸式互动模拟器。',
+        images: [
+          img('mb-dialogue-1', '可持续发展对话：透明展柜装置'),
+          img('mb-dialogue-2', '全新 E 级车智能安全展示车'),
+        ],
+        layout: 'two',
+      },
+    ],
+  },
+  {
+    zh: '广告营销',
+    en: 'Advertisement Marketing',
+    cases: [
+      {
+        title: '2025 大众汽车集团（中国）企业品牌建设',
+        meta: 'Volkswagen Group China · 2025',
+        body: '继 2024 年大众汽车集团（中国）成立 40 周年之后，久桁再次为其构建了一整套年度品牌传播应用体系。我们从集团的整体战略出发，制定了核心传播信息，提炼了品牌主张，并将其延伸至整体视觉识别、物料规范及全场景落地执行，为集团的年度传播与统一形象建设提供了全方位的支持。',
+        images: [
+          img('vw-brand-1', 'POWER 聚势而出 FORWARD：园区中庭应用'),
+          img('vw-brand-2', 'POWER 聚势而出 FORWARD：楼体外立面'),
+          img('vw-brand-3', 'POWER 聚势而出 FORWARD：活动现场'),
+        ],
+        layout: 'feature',
+      },
+      {
+        title: '大众汽车在华 40 周年传播活动 · Never Stop!',
+        meta: 'Volkswagen 40 Years in China · 2024',
+        body: '2024 年对大众汽车集团（中国）而言，是庆祝在华深耕 40 周年的重要一年。针对这一全年的传播活动，久桁打造了一个极具影响力的叙事平台——“大众汽车在华 40 周年——永不停歇（Volkswagen 40 · Never Stop）”。该设计源于全新的视觉识别系统，其主视觉中永恒流动的泡泡元素基于不断变换的动态形状，在其令人向往的表面上映衬出“永不停歇（NEVER STOP）”的品牌承诺。在传播层面，久桁负责全年的传播工作，并重点聚焦于社交媒体平台。',
+        images: [
+          img('vw40-1', 'Never Stop：主视觉、楼体灯光秀与标志性沙发装置'),
+          img('vw40-2', 'Never Stop：主题楼体'),
+          img('vw40-sofa', 'Never Stop：标志性沙发装置'),
+          img('vw40-kv', 'Never Stop：动态泡泡主视觉'),
+        ],
+        layout: 'feature-three',
+      },
+      {
+        title: '视频定制',
+        meta: 'MG Brand Video · Campaign Omnibus / 2026 MGS5 视频制作',
+        images: [
+          img('video-mg-omnibus', 'MG 品牌视频 Campaign Omnibus 画面', 'MG Brand Video · Campaign Omnibus'),
+          img('video-mgs5', '2026 MGS5 视频画面', '2026 MGS5 视频制作'),
+        ],
+        layout: 'two',
+      },
+      {
+        title: '宣发物料定制',
+        meta: 'Collateral · 视觉设计到成品',
+        body: '我们提供涵盖从视觉设计到最终产品实现全过程的综合解决方案。',
+        images: [
+          img('coll-rollup', '易拉宝', '易拉宝'),
+          img('coll-plate', '个性车牌', '个性车牌'),
+          img('coll-poster', '宣传海报', '宣传海报'),
+          img('coll-board', '展示板', '展示板'),
+          img('coll-banner', '车窗横幅', '车窗横幅'),
+          img('coll-hanger', '后视镜挂件', '后视镜挂件'),
+          img('coll-card', 'A6 产品卡片', 'A6 产品卡片'),
+          img('coll-tower', '产品立方体塔', '产品立方体塔'),
+        ],
+        layout: 'tiles4',
+      },
+      {
+        title: '周边产品定制',
+        meta: 'Merchandise · 图片仅供参考',
+        images: [
+          img('merch-tumbler', '保温杯', '保温杯'),
+          img('merch-plush', '毛绒玩具', '毛绒玩具'),
+          img('merch-jacket', '棒球服', '棒球服'),
+          img('merch-tee', 'T 恤', 'T 恤'),
+          img('merch-watch', '定制手表', '定制手表'),
+          img('merch-cap', '帽子', '帽子'),
+          img('merch-car', '车模', '车模'),
+          img('merch-pins', '金属胸章', '金属胸章'),
+          img('merch-tracker', '防丢器', '防丢器'),
+          img('merch-umbrella', '雨伞', '雨伞'),
+        ],
+        layout: 'tiles',
+      },
+      {
+        title: '户外广告牌选址、设计与安装',
+        meta: 'Out-of-home · Billboards',
+        body: '我们提供从视觉设计到最终安装的一站式服务。',
+        images: [
+          img('billboard-1', 'MG 户外广告牌：Better Greener Drive'),
+          img('billboard-2', 'MG 户外广告牌：Go Green with Pure EV'),
+        ],
+        layout: 'two',
+      },
+    ],
+  },
+  {
+    zh: '主题特展',
+    en: 'Thematic Exhibitions',
+    intro: [
+      img('expo-1', '主题特展：画廊展厅'),
+      img('expo-2', '主题特展：插画展墙'),
+      img('expo-4', '主题特展：蓝色展厅'),
+    ],
+    cases: [
+      {
+        title: 'Disney: Magic of Animation',
+        meta: 'Singapore · 2020',
+        images: [
+          img('disney-1', 'Disney Magic of Animation 展览主厅'),
+          img('disney-2', 'Disney 展览：白色展厅'),
+          img('disney-3', 'Disney 展览：绿色展厅'),
+          img('disney-4', 'Disney 展览：Frozen 展区'),
+          img('disney-5', 'Disney 展览：红色展区'),
+        ],
+        layout: 'feature',
+      },
+      {
+        title: 'Singapore Bird Paradise',
+        meta: 'Singapore · 2023',
+        images: [
+          img('bird-2', 'Bird Paradise：蛋类展墙'),
+          img('bird-3', 'Bird Paradise：鹦鹉解说牌'),
+          img('bird-4', 'Bird Paradise：企鹅展区'),
+          img('bird-5', 'Bird Paradise：织巢鸟树装置'),
+        ],
+        layout: 'feature-three',
+      },
+    ],
+  },
+];
+
+export const BRANDS = [
+  ['MG', 'MG'],
+  ['梅赛德斯-奔驰', 'Mercedes-Benz'],
+  ['大众汽车', 'Volkswagen'],
+  ['东风汽车', 'DFM'],
+  ['宝马', 'BMW'],
+  ['吉利', 'Geely'],
+  ['保时捷', 'Porsche'],
+  ['红旗', 'Hongqi'],
+  ['奥迪', 'Audi'],
+  ['安永', 'EY'],
+  ['五菱', 'Wuling'],
+  ['蔚来', 'NIO'],
+  ['中国银行', 'Bank of China'],
+  ['汇丰', 'HSBC'],
+];
+
+export const CITIES = [
+  { zh: '上海', en: 'Shanghai', lat: '31.23° N', lng: '121.47° E', hq: true },
+  { zh: '重庆', en: 'Chongqing', lat: '29.56° N', lng: '106.55° E' },
+  { zh: '中国台北', en: 'Taipei', lat: '25.03° N', lng: '121.57° E' },
+  { zh: '马尼拉', en: 'Manila', lat: '14.60° N', lng: '120.98° E' },
+  { zh: '金边', en: 'Phnom Penh', lat: '11.56° N', lng: '104.92° E' },
+  { zh: '新加坡', en: 'Singapore', lat: '1.35° N', lng: '103.82° E' },
+  { zh: '雅加达', en: 'Jakarta', lat: '6.21° S', lng: '106.85° E' },
+  { zh: '悉尼', en: 'Sydney', lat: '33.87° S', lng: '151.21° E' },
+];
+
+export const FACTORY_IMAGES = [
+  img('factory-1', '常熟 JA 科技有限公司厂区外观'),
+  img('factory-2', '工厂车间：大型自动化切割设备'),
+  img('factory-3', '工厂车间：自动化生产设备'),
+  img('factory-4', '工厂车间：自动化加工设备与配套机组'),
+  img('factory-5', '工厂车间：生产线'),
+  img('factory-6', '工厂车间：桥式起重机与生产通道'),
+];
