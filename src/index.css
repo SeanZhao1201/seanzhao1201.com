@@ -808,9 +808,10 @@ main { width: 100%; }
 
 .footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 24px;
+  gap: 14px 24px;
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 40px var(--gutter) 56px;
@@ -831,15 +832,43 @@ main { width: 100%; }
   color: var(--muted);
 }
 
-.footer-top {
+/* Above the column breakpoint the copyright line stays intact and the
+   links drop to a second row instead. */
+@media (min-width: 641px) {
+  .footer p { white-space: nowrap; }
+}
+
+.footer-top,
+.footer-link {
+  flex-shrink: 0;
+  white-space: nowrap;
   color: var(--dim);
   text-decoration: none;
   letter-spacing: var(--track-caps);
   transition: color 0.2s ease;
 }
 
-.footer-top:hover { color: var(--fg); }
-.footer-top:active { color: var(--fg); transition-duration: 0s; }
+/* Grow the hit area toward the 48px target without moving the layout:
+   padding adds the box, the equal negative margin cancels its flow. The
+   column layout on phones keeps it smaller so neighbours don't overlap. */
+.footer-top,
+.footer-link {
+  padding: 16px 0;
+  margin: -16px 0;
+}
+
+@media (max-width: 640px) {
+  .footer-top,
+  .footer-link {
+    padding: 7px 0;
+    margin: -7px 0;
+  }
+}
+
+.footer-top:hover,
+.footer-link:hover { color: var(--fg); }
+.footer-top:active,
+.footer-link:active { color: var(--fg); transition-duration: 0s; }
 
 /* ---------- Responsive tweaks ---------- */
 
@@ -868,7 +897,7 @@ main { width: 100%; }
   }
   .nav-scrim,
   .nav-brand, .nav-link, .nav-panel a,
-  .footer-top,
+  .footer-top, .footer-link,
   .markdown a,
   .markdown > ul:last-of-type li {
     transition-duration: 0.2s !important;

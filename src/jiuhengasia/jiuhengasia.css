@@ -1,0 +1,549 @@
+/* ---------- /jiuhengasia — company page layer on top of index.css ----------
+   Same tokens, same rules (dashed grid, numbered H2s, caps micro-labels).
+   Only additions: CJK font fallbacks and the layout blocks this page needs
+   (stat rows, card grids, photo galleries). */
+
+.jh {
+  /* Fraunces/Inter carry Latin; CJK glyphs fall through to the platform's
+     serif for display (Songti on Apple, Noto Serif SC where installed —
+     current Windows 11 ships it) and its sans for text. Older Windows has
+     no bundled CJK serif and falls back to YaHei. No CJK web font: that is
+     a multi-megabyte download for a handful of headings. */
+  --serif: 'Fraunces Variable', 'Fraunces', 'Songti SC', 'STSong',
+    'Noto Serif CJK SC', 'Noto Serif SC', 'Source Han Serif SC',
+    'Microsoft YaHei', 'PingFang SC', 'Times New Roman', serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Noto Sans SC', system-ui, sans-serif;
+  font-family: var(--sans);
+}
+
+/* ---------- Nav brand ---------- */
+
+.jh .nav-brand { gap: 9px; }
+
+.jh-brand-mark {
+  display: block;
+  width: auto;
+  height: 22px;
+  /* The emblem is a warm gradient; keep it from fighting the blue accent. */
+  filter: saturate(0.92);
+}
+
+/* ---------- Hero / pinned ---------- */
+
+.jh .hero .eyebrow { letter-spacing: 0.26em; }
+
+/* Full-width punctuation already carries side bearings; wide tracking on
+   the Chinese run doubles the gaps around （上海）. */
+.jh .hero .eyebrow [lang='zh-CN'] { letter-spacing: 0.08em; }
+
+.jh .hero .tagline { line-height: 1.7; }
+
+/* Chinese clauses already carry their own punctuation spacing. */
+.jh .pin-sub[lang='zh-CN'] .word + .word { margin-left: 0; }
+
+/* ---------- Headings ---------- */
+
+.jh .markdown h2 {
+  letter-spacing: 0.01em;
+  margin-bottom: 26px;
+}
+
+.jh-en {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.jh .markdown h2 .jh-en { margin-top: -2px; }
+
+.jh .markdown h3 {
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.jh .markdown h3 .jh-en { margin-top: 6px; }
+
+/* Section icons (1.5px line art, matching index.css) */
+.jh .markdown h2#about::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M12 11v5.5'/><circle cx='12' cy='7.8' r='0.6' fill='%23f5f5f7'/></svg>");
+}
+
+.jh .markdown h2#core-business::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7.5' height='7.5' rx='1'/><rect x='13.5' y='3' width='7.5' height='7.5' rx='1'/><rect x='3' y='13.5' width='7.5' height='7.5' rx='1'/><rect x='13.5' y='13.5' width='7.5' height='7.5' rx='1'/></svg>");
+}
+
+.jh .markdown h2#services::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3 21 8 12 13 3 8z'/><path d='M3 12l9 5 9-5'/><path d='M3 16l9 5 9-5'/></svg>");
+}
+
+.jh .markdown h2#cases::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='16' rx='1.5'/><circle cx='9' cy='10' r='1.6'/><path d='M21 16.5l-5-5-7 7'/></svg>");
+}
+
+.jh .markdown h2#clients::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z'/></svg>");
+}
+
+.jh .markdown h2#presence::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M3 12h18'/><path d='M12 3a13.5 13.5 0 0 1 0 18'/><path d='M12 3a13.5 13.5 0 0 0 0 18'/></svg>");
+}
+
+.jh .markdown h2#factory::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><path d='M2.5 21V10.5l5 3v-3l5 3v-3l5 3V5h4v16z'/><path d='M6.5 17h2'/><path d='M11 17h2'/><path d='M15.5 17h2'/></svg>");
+}
+
+.jh .markdown h2#contact::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='5' width='19' height='14' rx='2'/><path d='M3 7l9 6 9-6'/></svg>");
+}
+
+/* ---------- Dashed grid primitive ---------- */
+
+.jh-stats,
+.jh-cards,
+.jh-services,
+.jh-brands,
+.jh-cities {
+  display: grid;
+  gap: 0;
+  border-top: 1px dashed var(--rule-dash);
+  border-left: 1px dashed var(--rule-dash);
+}
+
+/* Borders live on the items, so every grid below uses column counts that
+   divide its item count (or spans the remainder) — an empty cell would
+   notch the dashed rectangle. These tiles are not links, so no hover
+   tint: on this site the tint means "tap target". */
+.jh-stat,
+.jh-card,
+.jh-service,
+.jh-brand,
+.jh-city {
+  border-right: 1px dashed var(--rule-dash);
+  border-bottom: 1px dashed var(--rule-dash);
+  padding: 22px 24px;
+}
+
+/* ---------- Stats ---------- */
+
+.jh-stats {
+  grid-template-columns: repeat(4, 1fr);
+  margin: 36px 0 12px;
+}
+
+.jh-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jh-stat-value {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  background: linear-gradient(176deg, #ffffff 0%, #b0b0b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.jh-stat-value small {
+  font-size: 0.42em;
+  margin-left: 0.12em;
+  letter-spacing: 0;
+}
+
+/* Labels that carry Chinese get a 12px floor and lighter tracking; the
+   0.656rem / 0.18em caps recipe stays on Latin-only labels. */
+.jh-stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.jh-stats--case {
+  grid-template-columns: repeat(5, 1fr);
+  margin: 4px 0 28px;
+}
+
+.jh-stats--case .jh-stat-value { font-size: clamp(1.6rem, 2.6vw, 2.25rem); }
+
+/* ---------- Core business cards ---------- */
+
+.jh-cards {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 36px;
+}
+
+.jh-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 24px 28px;
+}
+
+.jh-card-index {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: var(--track-caps-num);
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.jh-card-zh {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--fg);
+}
+
+.jh-card-en {
+  font-size: 0.656rem;
+  font-weight: 500;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.jh .markdown .jh-card-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+
+/* ---------- Services (five columns) ---------- */
+
+.jh-services {
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 28px;
+}
+
+.jh-service { padding: 22px 18px; }
+
+.jh .markdown .jh-service h3 {
+  font-size: 1.25rem;
+  margin: 0 0 12px;
+}
+
+.jh .markdown .jh-service ul {
+  margin: 0;
+  max-width: none;
+}
+
+.jh .markdown .jh-service li {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.jh-service-en {
+  font-size: 0.7rem;
+  color: var(--dim);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Work: group titles, case headers ---------- */
+
+.jh .markdown h3.jh-group-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  max-width: none;
+  margin: 72px 0 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--rule-dash);
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.2;
+  color: var(--fg);
+}
+
+.jh .markdown h3.jh-group-title .jh-en { display: inline; }
+
+/* index.css styles h1–h3 only; case titles are h4 under the group h3. */
+.jh .markdown h4.jh-case-title {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: clamp(1.25rem, 2.4vw, 1.625rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--fg);
+  margin: 60px 0 8px;
+}
+
+.jh .markdown .jh-case-meta {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  color: var(--dim);
+  margin-bottom: 18px;
+}
+
+.jh .markdown .jh-case-body { margin-bottom: 22px; }
+
+/* ---------- Galleries ---------- */
+
+.jh-grid {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 32px;
+}
+
+.jh-figure { margin: 0; min-width: 0; }
+
+.jh-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: rgba(255, 255, 255, 0.04);
+  outline: 1px solid rgba(255, 255, 255, 0.07);
+  outline-offset: -1px;
+}
+
+.jh-figure figcaption {
+  margin-top: 9px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.jh-grid--one { grid-template-columns: 1fr; }
+.jh-grid--two { grid-template-columns: repeat(2, 1fr); }
+.jh-grid--three { grid-template-columns: repeat(3, 1fr); }
+
+.jh-grid--four { grid-template-columns: repeat(4, 1fr); }
+
+/* Rows that mix portrait and landscape shots centre on the row, so the
+   difference reads as a deliberate triptych, not a hole under one image. */
+.jh-grid--three,
+.jh-grid--four,
+.jh-grid--feature-three { align-items: center; }
+
+.jh-grid--feature { grid-template-columns: repeat(2, 1fr); }
+.jh-grid--feature .jh-figure:first-child { grid-column: 1 / -1; }
+
+/* Lead image full width, then a row of three: keeps portrait shots short */
+.jh-grid--feature-three { grid-template-columns: repeat(3, 1fr); }
+.jh-grid--feature-three .jh-figure:first-child { grid-column: 1 / -1; }
+
+/* Display fixtures: hero render, four sized renders, three built pieces */
+.jh-grid--display { grid-template-columns: repeat(6, 1fr); }
+.jh-grid--display .jh-figure { grid-column: span 2; }
+.jh-grid--display .jh-figure:first-child { grid-column: 1 / -1; }
+.jh-grid--display .jh-figure:nth-child(-n + 5):not(:first-child) { grid-column: span 3; }
+
+/* Collateral & merchandise tiles: uniform crop so the wall reads as one.
+   Eight collateral pieces sit 4×2, ten merchandise pieces 5×2. */
+.jh-grid--tiles { grid-template-columns: repeat(5, 1fr); }
+.jh-grid--tiles4 { grid-template-columns: repeat(4, 1fr); }
+.jh-grid--tiles img,
+.jh-grid--tiles4 img { aspect-ratio: 4 / 5; object-fit: cover; }
+
+/* Two low-resolution originals (373px): cap the row so they render ~1:1 */
+.jh-grid--two-small {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 760px;
+}
+
+/* Factory photos are small originals (<=610px): six equal 4:3 tiles keep
+   every one of them at or below its native size. */
+.jh-grid--factory { grid-template-columns: repeat(3, 1fr); }
+.jh-grid--factory img { aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* ---------- Brands ---------- */
+
+.jh-brands {
+  /* Fourteen brands: two full rows of seven. */
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 28px;
+}
+
+.jh-brand {
+  min-height: 104px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 18px 12px;
+}
+
+.jh-brand-en {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.jh-brand-zh {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+/* ---------- Cities ---------- */
+
+.jh-cities {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 28px;
+}
+
+.jh-city {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jh-city-zh {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--fg);
+}
+
+.jh-city-en {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.656rem;
+  font-weight: 500;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.jh-city-hq { color: var(--accent); }
+
+.jh-city-coords {
+  margin-top: 10px;
+  font-size: 0.625rem;
+  letter-spacing: var(--track-caps-num);
+  color: var(--dim);
+}
+
+/* ---------- Contact ---------- */
+
+.jh .markdown .jh-closing {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: none;
+  margin-bottom: 30px;
+  background: linear-gradient(176deg, #ffffff 0%, #b0b0b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Three contact cards in one row; the address card has no link, so it
+   drops the hover/press tint that marks the others as tap targets. */
+.jh .markdown > ul:last-of-type { grid-template-columns: repeat(3, 1fr); }
+
+.jh .markdown > ul:last-of-type strong {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.jh .markdown > ul:last-of-type li.jh-contact-static:hover,
+.jh .markdown > ul:last-of-type li.jh-contact-static:active { background: none; }
+
+.jh-contact-plain {
+  font-size: 0.9375rem;
+  color: var(--fg);
+}
+
+/* ---------- Footer ---------- */
+
+.jh-footer::before { content: 'JH'; }
+
+/* The bilingual legal name is long: let it wrap, keep the links on one row. */
+.jh-footer p { white-space: normal; max-width: 34em; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1023px) {
+  .jh-cards { grid-template-columns: repeat(2, 1fr); }
+  .jh-services { grid-template-columns: repeat(2, 1fr); }
+  .jh-services .jh-service:last-child { grid-column: 1 / -1; }
+  /* 5 case stats: 3 + 2 on a 6-track grid, both rows full */
+  .jh-stats--case { grid-template-columns: repeat(6, 1fr); }
+  .jh-stats--case .jh-stat { grid-column: span 2; }
+  .jh-stats--case .jh-stat:nth-child(n + 4) { grid-column: span 3; }
+  /* 14 brands: 4 per row, the last two widen to fill row four */
+  .jh-brands { grid-template-columns: repeat(4, 1fr); }
+  .jh-brands .jh-brand:nth-last-child(-n + 2) { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .jh-grid--tiles, .jh-grid--tiles4 { grid-template-columns: repeat(2, 1fr); }
+  .jh .markdown > ul:last-of-type { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .jh-stats:not(.jh-stats--case) { grid-template-columns: repeat(2, 1fr); }
+  .jh-cities { grid-template-columns: repeat(2, 1fr); }
+  .jh-city-coords { letter-spacing: 0.08em; }
+  .jh-grid--three { grid-template-columns: repeat(2, 1fr); }
+  .jh-grid--four { grid-template-columns: repeat(2, 1fr); }
+  .jh-grid--feature-three { grid-template-columns: repeat(2, 1fr); }
+  .jh-grid--feature-three .jh-figure:last-child:nth-child(even) { grid-column: 1 / -1; }
+  .jh-grid--three .jh-figure:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .jh-grid--display .jh-figure:nth-child(-n + 5):not(:first-child) { grid-column: span 6; }
+  .jh-grid--display .jh-figure:nth-child(n + 6) { grid-column: span 3; }
+  .jh-grid--display .jh-figure:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 480px) {
+  .jh-grid { gap: 8px; }
+  .jh-grid--two { grid-template-columns: 1fr; }
+  .jh-grid--feature { grid-template-columns: 1fr; }
+  .jh-grid--three { grid-template-columns: 1fr; }
+  .jh-grid--four { grid-template-columns: repeat(2, 1fr); }
+  .jh-grid--two-small { grid-template-columns: 1fr; }
+  .jh-grid--factory { grid-template-columns: repeat(2, 1fr); }
+  .jh-stat, .jh-card, .jh-service, .jh-city { padding: 18px 18px; }
+  .jh-cards { grid-template-columns: 1fr; }
+  .jh-services { grid-template-columns: 1fr; }
+  .jh-stats--case { grid-template-columns: repeat(2, 1fr); }
+  .jh-stats--case .jh-stat,
+  .jh-stats--case .jh-stat:nth-child(n + 4) { grid-column: auto; }
+  .jh-stats--case .jh-stat:last-child { grid-column: 1 / -1; }
+  .jh-brands { grid-template-columns: repeat(2, 1fr); }
+  .jh-brands .jh-brand:nth-last-child(-n + 2) { grid-column: auto; }
+  .jh .markdown h3.jh-group-title { margin-top: 56px; }
+  .jh .markdown h4.jh-case-title { margin-top: 44px; }
+}
+
+@media (prefers-contrast: more) {
+  .jh-stat-value,
+  .jh .markdown .jh-closing {
+    background: none;
+    -webkit-text-fill-color: var(--fg);
+  }
+  .jh-figure img { outline-color: rgba(255, 255, 255, 0.5); }
+}
